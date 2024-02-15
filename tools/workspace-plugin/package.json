@@ -1,0 +1,12 @@
+{
+  "name": "@nx-example/workspace-plugin",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "generators": "./generators.json",
+  "executors": "./executor.json",
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "vite": "^5.0.0",
+    "@nx/vite": "18.0.4"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false,
+    "baseUrl": ".",
+    "typeRoots": ["node_modules/@types", "./types"],
+    "paths": {
+      "@nx-example/backend/infra/cdk": ["packages/libs/infra/cdk/src/index"],
+      "@nx-example/backend/shared/errors": [
+        "packages/libs/backend/shared/errors/src/index"
+      ],
+      "@nx-example/backend/shared/fastify": [
+        "packages/libs/backend/shared/fastify/src/index"
+      ],
+      "@nx-example/backend/shared/logger": [
+        "packages/libs/backend/shared/logger/src/index"
+      ],
+      "@nx-example/backend/shared/tracer": [
+        "packages/libs/backend/shared/tracer/src/index"
+      ],
+      "@nx-example/shared/example/dto": [
+        "packages/libs/shared/example/dto/src/index"
+      ],
+      "@nx-example/shared/util": ["packages/libs/shared/util/src/index"],
+      "@nx-example/ui-components": ["packages/libs/ui-components/src/index.ts"],
+      "@nx-example/workspace-plugin": ["tools/workspace-plugin/src/index"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

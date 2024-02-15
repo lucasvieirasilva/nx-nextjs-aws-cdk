@@ -1,0 +1,28 @@
+{
+  "name": "backend-shared-tracer",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/libs/backend/shared/tracer/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/libs/backend/shared/tracer",
+        "main": "packages/libs/backend/shared/tracer/src/index.ts",
+        "tsConfig": "packages/libs/backend/shared/tracer/tsconfig.lib.json",
+        "assets": ["packages/libs/backend/shared/tracer/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {}
+    }
+  },
+  "tags": ["backend", "lambda", "common"]
+}

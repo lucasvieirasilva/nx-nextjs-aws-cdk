@@ -1,0 +1,26 @@
+{
+  "name": "example-ui-e2e",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/apps/example-ui-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "packages/apps/example-ui-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "example-ui:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "example-ui:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["example-ui"]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "api-example",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/api/example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "packages/api/example/dist",
+        "bundle": true,
+        "main": "packages/api/example/src/main.ts",
+        "tsConfig": "packages/api/example/tsconfig.app.json",
+        "external": [],
+        "thirdParty": true,
+        "esbuildConfig": "esbuild.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "cdk-deploy": {},
+    "cdk-synth": {},
+    "cdk-watch": {},
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {}
+    }
+  },
+  "tags": ["backend", "lambda", "http"]
+}

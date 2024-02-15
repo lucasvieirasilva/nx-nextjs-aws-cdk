@@ -1,0 +1,40 @@
+{
+  "name": "core-infra",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/core/infra/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "packages/core/infra/dist",
+        "bundle": true,
+        "main": "packages/core/infra/src/index.ts",
+        "tsConfig": "packages/core/infra/tsconfig.app.json",
+        "external": [],
+        "thirdParty": true,
+        "esbuildConfig": "esbuild.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "cdk-watch": {},
+    "cdk-deploy": {},
+    "cdk-synth": {},
+    "cdk-diff": {},
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {}
+    }
+  },
+  "tags": ["infra", "core"]
+}

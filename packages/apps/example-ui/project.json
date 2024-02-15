@@ -1,0 +1,96 @@
+{
+  "name": "example-ui",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/apps/example-ui",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "dev",
+      "options": {
+        "outputPath": "packages/apps/example-ui"
+      },
+      "configurations": {
+        "serve": {},
+        "dev": {},
+        "test": {},
+        "prod": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "serve",
+      "options": {
+        "buildTarget": "example-ui:build:serve",
+        "port": 3000,
+        "dev": true
+      }
+    },
+    "sst-deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx sst deploy --stage {args.stage}",
+        "cwd": "packages/apps/example-ui"
+      },
+      "configurations": {
+        "dev": {
+          "args": "--stage dev"
+        },
+        "test": {
+          "args": "--stage test"
+        },
+        "prod": {
+          "args": "--stage prod"
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "frontend-admin-ui:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "storybook": {
+      "executor": "@nx/storybook:storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "packages/apps/example-ui/.storybook"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nx/storybook:build",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/example-ui",
+        "configDir": "packages/apps/example-ui/.storybook"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c packages/apps/example-ui/.storybook --url=http://localhost:4400"
+      }
+    }
+  },
+  "tags": ["frontend", "example-ui"]
+}

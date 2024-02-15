@@ -1,0 +1,165 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "cdk-diff": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx cdk diff '*' -c stage={args.stage}",
+        "cwd": "{projectRoot}"
+      },
+      "dependsOn": ["build"],
+      "configurations": {
+        "dev": {
+          "args": "--stage dev"
+        },
+        "test": {
+          "args": "--stage test"
+        },
+        "prod": {
+          "args": "--stage prod"
+        }
+      }
+    },
+    "cdk-synth": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx cdk synth '*' -c stage={args.stage}",
+        "cwd": "{projectRoot}"
+      },
+      "dependsOn": ["build"],
+      "configurations": {
+        "dev": {
+          "args": "--stage dev"
+        },
+        "test": {
+          "args": "--stage test"
+        },
+        "prod": {
+          "args": "--stage prod"
+        }
+      }
+    },
+    "cdk-deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx cdk deploy '*' --require-approval never -c stage={args.stage} --concurrency 10",
+        "cwd": "{projectRoot}"
+      },
+      "dependsOn": ["build"],
+      "configurations": {
+        "dev": {
+          "args": "--stage dev"
+        },
+        "test": {
+          "args": "--stage test"
+        },
+        "prod": {
+          "args": "--stage prod"
+        }
+      }
+    },
+    "cdk-watch": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cd $NX_WORKSPACE_ROOT; npx nx run $NX_TASK_TARGET_PROJECT:build --configuration=development --watch",
+          "npx cdk watch '*' --require-approval never --hotswap -c stage={args.stage} -c ephemeral={args.ephemeral}"
+        ],
+        "cwd": "{projectRoot}"
+      },
+      "dependsOn": ["build"],
+      "configurations": {
+        "dev": {
+          "args": "--stage dev"
+        },
+        "test": {
+          "args": "--stage test"
+        },
+        "prod": {
+          "args": "--stage prod"
+        }
+      }
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "production",
+        "^production",
+        "{projectRoot}/nest-cli.json",
+        "{workspaceRoot}/esbuild.config.js",
+        "{workspaceRoot}/bitbucket-pipelines.yml"
+      ],
+      "cache": true
+    },
+    "@nx/vite:test": {
+      "cache": true,
+      "inputs": ["default", "^production"]
+    },
+    "e2e": {
+      "cache": true,
+      "inputs": ["default", "^production"]
+    },
+    "build-storybook": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^production",
+        "{projectRoot}/.storybook/**/*",
+        "{projectRoot}/tsconfig.storybook.json"
+      ]
+    },
+    "@nx/eslint:lint": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "{workspaceRoot}/eslint.config.js",
+        "{workspaceRoot}/bitbucket-pipelines.yml"
+      ],
+      "cache": true
+    }
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/src/test-setup.[jt]s",
+      "!{projectRoot}/test-setup.[jt]s",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/eslint.config.js",
+      "!{projectRoot}/cypress/**/*",
+      "!{projectRoot}/**/*.cy.[jt]s?(x)",
+      "!{projectRoot}/cypress.config.[jt]s",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/tsconfig.storybook.json"
+    ],
+    "sharedGlobals": []
+  },
+  "generators": {
+    "@nx/react": {
+      "application": {
+        "babel": true
+      },
+      "library": {
+        "unitTestRunner": "vitest"
+      }
+    },
+    "@nx/next": {
+      "application": {
+        "style": "styled-components",
+        "linter": "eslint"
+      }
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "options": {
+        "cacheableOperations": ["build-storybook"]
+      }
+    }
+  }
+}

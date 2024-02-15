@@ -1,0 +1,18 @@
+{
+  "name": "@nx-example/backend/shared/fastify",
+  "version": "0.0.1",
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "fastify": "^4.23.2",
+    "@fastify/middie": "^8.3.0",
+    "@fastify/type-provider-typebox": "^3.5.0",
+    "@fastify/cors": "^8.4.0",
+    "fastify-raw-body": "^4.2.2",
+    "@fastify/aws-lambda": "^3.3.0",
+    "vite": "^5.0.0",
+    "@nx/vite": "18.0.4"
+  },
+  "type": "module",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts"
+}
